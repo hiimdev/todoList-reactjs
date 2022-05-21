@@ -12,6 +12,7 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
+            newItem: '',
             todoItems: [
                 {
                     title: 'go to work',
@@ -27,6 +28,9 @@ class App extends Component {
                 },
             ],
         };
+
+        this.onKeyUp = this.onKeyUp.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
 
     onItemClicked(item) {
@@ -43,12 +47,44 @@ class App extends Component {
         };
     }
 
+    onKeyUp(event) {
+        // Enter key
+        if (event.keyCode === 13) {
+            let text = event.target.value;
+            if (!text) {
+                return;
+            }
+            text = text.trim();
+            if (!text) {
+                return;
+            }
+
+            this.setState({
+                newItem: '',
+                todoItems: [
+                    ...this.state.todoItems,
+                    { title: text, isComplete: false },
+                ],
+            });
+        }
+    }
+
+    onChange(event) {
+        this.setState({
+            newItem: event.target.value,
+        });
+    }
+
     render() {
-        const { todoItems } = this.state;
+        const { todoItems, newItem } = this.state;
         return (
             <div className='App'>
                 <div className='container'>
-                    <Input />
+                    <Input
+                        value={newItem}
+                        onChange={this.onChange}
+                        onKeyUp={this.onKeyUp}
+                    />
                     {todoItems.length > 0 &&
                         todoItems.map((item, index) => (
                             <TodoItem

@@ -6,6 +6,7 @@ import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 import './Input.css';
 class Input extends Component {
     render() {
+        const { onKeyUp, value, onChange } = this.props;
         return (
             <div className='wrap'>
                 <div className='icon-check'>
@@ -14,6 +15,9 @@ class Input extends Component {
                 <input
                     className='input'
                     type='text'
+                    onKeyUp={onKeyUp}
+                    onChange={onChange}
+                    value={value}
                     placeholder='What need to be done?'
                 ></input>
             </div>
