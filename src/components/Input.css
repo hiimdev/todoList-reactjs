@@ -1,0 +1,45 @@
+.wrap {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    width: 100%;
+    height: 100%;
+    border-bottom: 1px solid #ccc;
+}
+
+.wrap:last-child {
+    border-bottom: none;
+}
+
+.wrap-todoItem {
+    display: flex;
+}
+
+.icon-check {
+    width: 5%;
+    text-align: center;
+}
+
+.icon-check svg {
+    font-size: 1.5rem;
+    opacity: 0.5;
+}
+
+.icon-check svg:hover {
+    cursor: pointer;
+}
+
+.input {
+    width: 95%;
+    font-size: 1.5rem;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 1rem;
+    outline: none;
+    border: none;
+}
+
+.input::placeholder {
+    opacity: 0.3;
+}
