@@ -26,8 +26,9 @@
     cursor: pointer;
 }
 
-.todoItem:hover .icon-close {
+.todoItem:hover .icon-del {
     display: block;
+    /* opacity: 0.6; */
 }
 
 .itemComplete {
@@ -37,7 +38,7 @@
 
 .icon {
     font-size: 1.5rem;
-    opacity: 0.4;
+    opacity: 0.3;
 }
 
 .icon svg:hover {
@@ -53,7 +54,7 @@
     display: block;
 }
 
-.icon-close {
+.icon-del {
     position: absolute;
     top: 50%;
     right: 9%;
@@ -61,7 +62,13 @@
     display: none;
 }
 
-.icon-close:hover {
+.icon-del:hover {
     cursor: pointer;
-    opacity: 0.3;
+    opacity: 0.6;
+}
+
+.item-null {
+    margin: 2rem auto;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.5rem;
 }
