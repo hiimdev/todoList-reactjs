@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import TodoItem from './components/TodoItem';
 import Input from './components/Input';
-// import TrafficLight from './components/TrafficLight';
+import TrafficLight from './components/TrafficLight';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -146,9 +146,8 @@ class App extends Component {
                     {todoItems.length === 0 && (
                         <p className='item-null'>Nothing here!!!</p>
                     )}
-
-                    {/* <TrafficLight /> */}
                 </div>
+                <TrafficLight />
             </div>
         );
     }
