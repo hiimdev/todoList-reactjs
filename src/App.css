@@ -1,9 +1,10 @@
 .container {
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    width: 100vh;
+    max-width: 100vh;
     height: auto;
     margin: 4rem auto;
     border: 1px solid #ccc;

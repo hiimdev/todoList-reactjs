@@ -1,4 +1,3 @@
-// import logo from './logo.svg';
 import React, { Component } from 'react';
 
 import TodoItem from './components/TodoItem';
@@ -46,7 +45,6 @@ class App extends Component {
 
             this.setState({
                 todoItems: todoItems.map((i) =>
-                    // i !== item ? { ...i } : { ...i, isComplete: !isComplete },
                     i === item ? { ...i, isComplete: !isComplete } : { ...i },
                 ),
             });
