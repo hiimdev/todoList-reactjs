@@ -52,7 +52,6 @@ class App extends Component {
                     i === item ? { ...i, isComplete: !isComplete } : { ...i },
                 ),
             });
-            toast.success('Wow so easy!');
         };
     }
 
