@@ -60,10 +60,6 @@ class App extends Component {
         // Enter key
         if (event.keyCode === 13) {
             let text = event.target.value;
-            if (!text) {
-                toast.error('Missing require!');
-                return;
-            }
             text = text.trim();
             if (!text) {
                 toast.error('Missing require!');
