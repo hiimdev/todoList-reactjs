@@ -7,6 +7,10 @@ import TrafficLight from './components/TrafficLight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 
+// react-toastify
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import './App.css';
 import './components/Input.css';
 import './components/todoItem.css';
@@ -48,6 +52,7 @@ class App extends Component {
                     i === item ? { ...i, isComplete: !isComplete } : { ...i },
                 ),
             });
+            toast.success('Wow so easy!');
         };
     }
 
@@ -56,10 +61,12 @@ class App extends Component {
         if (event.keyCode === 13) {
             let text = event.target.value;
             if (!text) {
+                toast.error('Missing require!');
                 return;
             }
             text = text.trim();
             if (!text) {
+                toast.error('Missing require!');
                 return;
             }
 
@@ -70,6 +77,7 @@ class App extends Component {
                     { title: text, isComplete: false },
                 ],
             });
+            toast.success('Success!');
         }
     }
 
@@ -102,6 +110,7 @@ class App extends Component {
                     ...todoItems.slice(index + 1),
                 ],
             });
+            toast.success('Delete successfully!!');
         };
     }
 
@@ -109,10 +118,10 @@ class App extends Component {
         const { todoItems, newItem } = this.state;
 
         return (
-            <div className='App'>
-                <div className='container'>
-                    <div className='wrap'>
-                        <div className='icon-check'>
+            <div className="App">
+                <div className="container">
+                    <div className="wrap">
+                        <div className="icon-check">
                             <FontAwesomeIcon
                                 icon={faCheck}
                                 onClick={this.checkedAll}
@@ -132,7 +141,7 @@ class App extends Component {
                                 item={item}
                                 onClick={this.onItemClicked(item)}
                             >
-                                <div className='icon icon-del'>
+                                <div className="icon icon-del">
                                     <FontAwesomeIcon
                                         icon={faXmark}
                                         onClick={this.delItem(item)}
@@ -142,10 +151,21 @@ class App extends Component {
                         ))}
 
                     {todoItems.length === 0 && (
-                        <p className='item-null'>Nothing here!!!</p>
+                        <p className="item-null">Nothing here!!!</p>
                     )}
                 </div>
                 <TrafficLight />
+                <ToastContainer
+                    position="top-right"
+                    autoClose={3000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
             </div>
         );
     }
