@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 
-import TodoItem from './components/TodoItem';
-import Input from './components/Input';
-import TrafficLight from './components/TrafficLight';
+// className
+import classNames from 'classnames';
 
+// components
+import Input from './components/Input';
+// import TrafficLight from './components/TrafficLight';
+
+// Font Awesomeicon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 // react-toastify
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+// style
 import './App.css';
-import './components/Input.css';
-import './components/todoItem.css';
 
 class App extends Component {
     constructor(props) {
@@ -21,41 +25,36 @@ class App extends Component {
         this.state = {
             newItem: '',
             todoItems: [
-                // {
-                //     title: 'go to work',
-                //     isComplete: true,
-                // },
-                // {
-                //     title: 'go to school',
-                //     isComplete: false,
-                // },
-                // {
-                //     title: 'go to bed',
-                //     isComplete: false,
-                // },
+                {
+                    title: 'go to work',
+                    isComplete: true,
+                },
+                {
+                    title: 'go to school',
+                    isComplete: false,
+                },
+                {
+                    title: 'go to bed',
+                    isComplete: false,
+                },
             ],
         };
 
-        this.onKeyUp = this.onKeyUp.bind(this);
-        this.onChange = this.onChange.bind(this);
-
-        this.checkedAll = this.checkedAll.bind(this);
+        // this.onKeyUp = this.onKeyUp.bind(this);
     }
 
-    onItemClicked(item) {
-        return () => {
-            const { todoItems } = this.state;
-            const isComplete = item.isComplete;
+    handleTodoComplete = (item) => {
+        const { todoItems } = this.state;
+        const isComplete = item.isComplete;
 
-            this.setState({
-                todoItems: todoItems.map((i) =>
-                    i === item ? { ...i, isComplete: !isComplete } : { ...i },
-                ),
-            });
-        };
-    }
+        this.setState({
+            todoItems: todoItems.map((i) =>
+                i === item ? { ...i, isComplete: !isComplete } : { ...i },
+            ),
+        });
+    };
 
-    onKeyUp(event) {
+    handleAddTodo = (event) => {
         // Enter key
         if (event.keyCode === 13) {
             let text = event.target.value;
@@ -74,15 +73,15 @@ class App extends Component {
             });
             toast.success('Success!');
         }
-    }
+    };
 
-    onChange(event) {
+    handleChangeInput = (event) => {
         this.setState({
             newItem: event.target.value,
         });
-    }
+    };
 
-    checkedAll() {
+    handleCheckAll = () => {
         const { todoItems } = this.state;
 
         this.setState({
@@ -92,22 +91,20 @@ class App extends Component {
                     : { ...i, isComplete: !i.isComplete },
             ),
         });
-    }
+    };
 
-    delItem(item) {
-        return () => {
-            const { todoItems } = this.state;
-            const index = todoItems.indexOf(item);
+    handleDeleteTodo = (item) => {
+        const { todoItems } = this.state;
+        const index = todoItems.indexOf(item);
 
-            this.setState({
-                todoItems: [
-                    ...todoItems.slice(0, index),
-                    ...todoItems.slice(index + 1),
-                ],
-            });
-            toast.success('Delete successfully!!');
-        };
-    }
+        this.setState({
+            todoItems: [
+                ...todoItems.slice(0, index),
+                ...todoItems.slice(index + 1),
+            ],
+        });
+        toast.success('Delete successfully!!');
+    };
 
     render() {
         const { todoItems, newItem } = this.state;
@@ -119,37 +116,74 @@ class App extends Component {
                         <div className="icon-check">
                             <FontAwesomeIcon
                                 icon={faCheck}
-                                onClick={this.checkedAll}
+                                onClick={() => this.handleCheckAll()}
                             />
                         </div>
                         <Input
                             value={newItem}
-                            onChange={this.onChange}
-                            onKeyUp={this.onKeyUp}
+                            onChange={(event) => this.handleChangeInput(event)}
+                            onKeyUp={(event) => this.handleAddTodo(event)}
                         />
                     </div>
 
                     {todoItems.length > 0 &&
                         todoItems.map((item, index) => (
-                            <TodoItem
-                                key={index}
-                                item={item}
-                                onClick={this.onItemClicked(item)}
-                            >
-                                <div className="icon icon-del">
-                                    <FontAwesomeIcon
-                                        icon={faXmark}
-                                        onClick={this.delItem(item)}
-                                    />
+                            <div className="wrap" key={index}>
+                                <div
+                                    onClick={() =>
+                                        this.handleTodoComplete(item)
+                                    }
+                                    className={classNames(
+                                        'icon',
+                                        'icon-circle',
+                                        {
+                                            'icon-active': !item.isComplete,
+                                        },
+                                    )}
+                                >
+                                    <FontAwesomeIcon icon={faCircle} />
                                 </div>
-                            </TodoItem>
+                                <div
+                                    onClick={() =>
+                                        this.handleTodoComplete(item)
+                                    }
+                                    className={classNames(
+                                        'icon',
+                                        'icon-circle',
+                                        {
+                                            'icon-active': item.isComplete,
+                                        },
+                                    )}
+                                >
+                                    <FontAwesomeIcon icon={faCircleCheck} />
+                                </div>
+
+                                <div
+                                    className={classNames('todoItem', {
+                                        itemComplete: item.isComplete,
+                                    })}
+                                >
+                                    <p>{item.title}</p>
+
+                                    <div className="icon icon-del">
+                                        <FontAwesomeIcon
+                                            icon={faXmark}
+                                            onClick={() =>
+                                                this.handleDeleteTodo(item)
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                         ))}
 
                     {todoItems.length === 0 && (
                         <p className="item-null">Nothing here!!!</p>
                     )}
                 </div>
-                <TrafficLight />
+
+                {/* <TrafficLight /> */}
+
                 <ToastContainer
                     position="top-right"
                     autoClose={3000}
