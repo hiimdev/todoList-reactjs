@@ -130,3 +130,12 @@
 .input::placeholder {
     opacity: 0.3;
 }
+
+.input-edit {
+    width: 100%;
+    font-size: 1.5rem;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 1rem;
+    outline: none;
+    border: 1px solid #ccc;
+}
