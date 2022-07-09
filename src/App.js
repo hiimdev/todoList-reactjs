@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 // className
 import classNames from 'classnames';
@@ -8,12 +8,12 @@ import Input from './components/Input';
 import TrafficLight from './components/TrafficLight';
 
 // Font Awesomeicon
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { faCircleCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCheck, faXmark} from '@fortawesome/free-solid-svg-icons';
+import {faCircleCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
 
 // react-toastify
-import { ToastContainer, toast } from 'react-toastify';
+import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // style
@@ -49,12 +49,12 @@ class App extends Component {
 
     // handle when todo complete
     handleTodoComplete = (item) => {
-        const { todoItems } = this.state;
+        const {todoItems} = this.state;
         const isComplete = item.isComplete;
 
         this.setState({
             todoItems: todoItems.map((i) =>
-                i === item ? { ...i, isComplete: !isComplete } : { ...i },
+                i === item ? {...i, isComplete: !isComplete} : {...i},
             ),
         });
     };
@@ -94,18 +94,18 @@ class App extends Component {
 
     //  handle check all
     handleCheckAll = () => {
-        const { todoItems } = this.state;
+        const {todoItems} = this.state;
 
         this.setState({
             todoItems: todoItems.map((i) =>
-                !i.isComplete ? { ...i, isComplete: true } : { ...i },
+                !i.isComplete ? {...i, isComplete: true} : {...i},
             ),
         });
     };
 
     // handle delete
     handleDeleteTodo = (item) => {
-        const { todoItems } = this.state;
+        const {todoItems} = this.state;
         const index = todoItems.indexOf(item);
 
         this.setState({
@@ -120,14 +120,14 @@ class App extends Component {
     // Edit todo
     // DB Click todo
     handleDBClickEditTodo = (item) => {
-        const { todoItems } = this.state;
+        const {todoItems} = this.state;
 
         this.setState({
             editTodo: item,
             todoItems: todoItems.map((i) =>
                 i === item && i.isComplete
-                    ? { ...i, isComplete: !i.isComplete }
-                    : { ...i },
+                    ? {...i, isComplete: !i.isComplete}
+                    : {...i},
             ),
         });
     };
@@ -144,7 +144,7 @@ class App extends Component {
 
     // handle update
     handleUpdateEditTodo = (event, item) => {
-        const { todoItems, editTodo } = this.state;
+        const {todoItems, editTodo} = this.state;
         const isEmptyObj = Object.keys(editTodo).length === 0;
         // Enter key
         if (event.keyCode === 13) {
@@ -183,15 +183,15 @@ class App extends Component {
     };
 
     render() {
-        const { todoItems, newItem, editTodo } = this.state;
+        const {todoItems, newItem, editTodo} = this.state;
 
         let isEmptyObj = Object.keys(editTodo).length === 0;
 
         return (
-            <div className="App">
-                <div className="container">
-                    <div className="wrap">
-                        <div className="icon-check">
+            <div className='App'>
+                <div className='container'>
+                    <div className='wrap'>
+                        <div className='icon-check'>
                             <FontAwesomeIcon
                                 icon={faCheck}
                                 onClick={() => this.handleCheckAll()}
@@ -206,7 +206,7 @@ class App extends Component {
 
                     {todoItems.length > 0 &&
                         todoItems.map((item, index) => (
-                            <div className="wrap" key={item.id}>
+                            <div className='wrap' key={item.id}>
                                 <div
                                     onClick={() =>
                                         this.handleTodoComplete(item)
@@ -253,7 +253,7 @@ class App extends Component {
                                         <>
                                             {editTodo.id === item.id ? (
                                                 <input
-                                                    className="input-edit"
+                                                    className='input-edit'
                                                     onChange={(event) =>
                                                         this.handleOnChangeEditTodo(
                                                             event,
@@ -284,7 +284,7 @@ class App extends Component {
                                         </>
                                     )}
 
-                                    <div className="icon icon-del">
+                                    <div className='icon icon-del'>
                                         <FontAwesomeIcon
                                             icon={faXmark}
                                             onClick={() =>
@@ -297,14 +297,14 @@ class App extends Component {
                         ))}
 
                     {todoItems.length === 0 && (
-                        <p className="item-null">Nothing here!!!</p>
+                        <p className='item-null'>Nothing here!!!</p>
                     )}
                 </div>
 
                 <TrafficLight />
 
                 <ToastContainer
-                    position="top-right"
+                    position='top-right'
                     autoClose={3000}
                     hideProgressBar={false}
                     newestOnTop={false}
