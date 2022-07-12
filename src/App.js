@@ -22,29 +22,17 @@ import './App.css';
 class App extends Component {
     constructor(props) {
         super(props);
+
+        // let todos = [];
+
+        let todos = JSON.parse(localStorage.getItem('todos'));
+        console.log(todos);
+
         this.state = {
             newItem: '',
-            todoItems: [
-                {
-                    id: 1,
-                    title: 'go to work',
-                    isComplete: true,
-                },
-                {
-                    id: 2,
-                    title: 'go to school',
-                    isComplete: false,
-                },
-                {
-                    id: 3,
-                    title: 'go to bed',
-                    isComplete: false,
-                },
-            ],
+            todoItems: todos || [],
             editTodo: {},
         };
-
-        // this.onKeyUp = this.onKeyUp.bind(this);
     }
 
     // handle when todo complete
@@ -70,17 +58,21 @@ class App extends Component {
                 return;
             }
 
+            let newTodos = [
+                ...this.state.todoItems,
+                {
+                    id: Math.floor(Math.random() * 100000),
+                    title: text,
+                    isComplete: false,
+                },
+            ];
+
             this.setState({
                 newItem: '',
-                todoItems: [
-                    ...this.state.todoItems,
-                    {
-                        id: Math.floor(Math.random() * 100000),
-                        title: text,
-                        isComplete: false,
-                    },
-                ],
+                todoItems: newTodos,
             });
+            localStorage.setItem('todos', JSON.stringify(newTodos));
+
             toast.success('Success!');
         }
     };
@@ -108,12 +100,16 @@ class App extends Component {
         const {todoItems} = this.state;
         const index = todoItems.indexOf(item);
 
+        let newTodos = [
+            ...todoItems.slice(0, index),
+            ...todoItems.slice(index + 1),
+        ];
+
         this.setState({
-            todoItems: [
-                ...todoItems.slice(0, index),
-                ...todoItems.slice(index + 1),
-            ],
+            todoItems: newTodos,
         });
+        localStorage.setItem('todos', JSON.stringify(newTodos));
+
         toast.success('Delete successfully!!');
     };
 
@@ -165,10 +161,14 @@ class App extends Component {
 
                 todoItemsCopy[objIndex].title = editTodo.title;
 
+                let newTodos = todoItemsCopy;
+
                 this.setState({
-                    todoItems: todoItemsCopy,
+                    todoItems: newTodos,
                     editTodo: {},
                 });
+                localStorage.setItem('todos', JSON.stringify(newTodos));
+
                 toast.success('Update successful!');
                 return;
             }
@@ -184,6 +184,7 @@ class App extends Component {
 
     render() {
         const {todoItems, newItem, editTodo} = this.state;
+        console.log(todoItems);
 
         let isEmptyObj = Object.keys(editTodo).length === 0;
 
@@ -203,8 +204,11 @@ class App extends Component {
                             onKeyUp={(event) => this.handleAddTodo(event)}
                         />
                     </div>
+                    {todoItems.length === 0 && (
+                        <p className='item-null'>Nothing here!!!</p>
+                    )}
 
-                    {todoItems.length > 0 &&
+                    {todoItems.length !== 0 &&
                         todoItems.map((item, index) => (
                             <div className='wrap' key={item.id}>
                                 <div
@@ -295,10 +299,6 @@ class App extends Component {
                                 </div>
                             </div>
                         ))}
-
-                    {todoItems.length === 0 && (
-                        <p className='item-null'>Nothing here!!!</p>
-                    )}
                 </div>
 
                 <TrafficLight />
